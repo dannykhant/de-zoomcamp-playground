@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "dbt-core>=1.10.19",
+    "dbt-duckdb>=1.10.0",
     "fastparquet>=2025.12.0",
     "google-api-core>=2.29.0",
     "google-cloud-storage>=3.9.0",
