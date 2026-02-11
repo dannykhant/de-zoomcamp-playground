@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw
+    database: taxi_rides_ny
+    schema: raw
+    tables:
+      - name: green_tripdata
+        description: "Raw data for green taxi trips"
+        loaded_at_field: lpep_pickup_datetime
+      - name: yellow_tripdata
+        description: "Raw data for yellow taxi trips"
+        loaded_at_field: lpep_pickup_datetime

@@ -1,0 +1,181 @@
+version: 2
+
+models:
+  - name: dim_vendors
+    description: ""
+    columns:
+      - name: vendor_id
+        data_type: integer
+        description: "Unique identifier for each vendor."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: vendor_name
+        data_type: varchar
+        description: "Name of the vendor."
+
+  - name: dim_zones
+    description: ""
+    columns:
+      - name: location_id
+        data_type: integer
+        description: "Unique identifier for each location."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: borough
+        data_type: varchar
+        description: "Borough of the location."
+
+      - name: zone
+        data_type: varchar
+        description: "Zone of the location."
+
+      - name: service_zone
+        data_type: varchar
+        description: "Service zone of the location."
+
+  - name: fct_trips
+    description: "Fact table containing trip data for NYC taxis."
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: trip_id
+        data_type: varchar
+        description: "Unique identifier for each trip."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: vendor_id
+        data_type: integer
+        description: "Identifier for the taxi vendor."
+        data_tests:
+          - not_null
+
+      - name: rate_code_id
+        data_type: integer
+        description: "Identifier for the rate code."
+
+      - name: pu_location_id
+        data_type: integer
+        description: "Pickup location identifier."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_zones')
+                field: location_id
+
+      - name: do_location_id
+        data_type: integer
+        description: "Dropoff location identifier."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_zones')
+                field: location_id
+
+      - name: pickup_datetime
+        data_type: timestamp
+        description: "Timestamp of when the trip started."
+        data_tests:
+          - not_null
+
+      - name: dropoff_datetime
+        data_type: timestamp
+        description: "Timestamp of when the trip ended."
+        data_tests:
+          - not_null
+
+      - name: store_and_fwd_flag
+        data_type: varchar
+        description: ""
+
+      - name: passenger_count
+        data_type: integer
+        description: ""
+
+      - name: trip_distance
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: trip_type
+        data_type: integer
+        description: ""
+
+      - name: taxi_type
+        data_type: varchar
+        description: ""
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['yellow', 'green']
+
+      - name: fare_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: extra
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: mta_tax
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tip_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tolls_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: ehail_fee
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: improvement_surcharge
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: total_amount
+        data_type: decimal(18,3)
+        description: ""
+        data_tests:
+          - not_null
+
+      - name: payment_type
+        data_type: integer
+        description: ""
+
+      - name: payment_type_description
+        data_type: varchar
+        description: ""
+
+      - name: pu_borough
+        data_type: varchar
+        description: ""
+
+      - name: pu_zone
+        data_type: varchar
+        description: ""
+
+      - name: pu_service_zone
+        data_type: varchar
+        description: ""
+
+      - name: do_borough
+        data_type: varchar
+        description: ""
+
+      - name: do_zone
+        data_type: varchar
+        description: ""
+
+      - name: do_service_zone
+        data_type: varchar
+        description: ""
