@@ -1,0 +1,6 @@
+macros:
+  - name: get_vendor_info
+    description: "Returns the vendor name for a given vendor_id"
+    arguments:
+      - name: vendor_id
+        description: "The ID of the vendor"
