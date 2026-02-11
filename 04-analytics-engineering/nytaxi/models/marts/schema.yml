@@ -90,6 +90,10 @@ models:
         data_tests:
           - not_null
 
+      - name: trip_duration_minutes
+        data_type: bigint
+        description: "Duration of the trip in minutes."
+
       - name: store_and_fwd_flag
         data_type: varchar
         description: ""

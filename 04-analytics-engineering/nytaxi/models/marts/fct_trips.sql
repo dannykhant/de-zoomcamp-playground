@@ -26,6 +26,7 @@ select
     -- timestamps
     t.pickup_datetime,
     t.dropoff_datetime,
+    {{ get_duration_minutes('t.pickup_datetime', 't.dropoff_datetime') }} as trip_duration_minutes,
 
     -- trip details
     t.store_and_fwd_flag,

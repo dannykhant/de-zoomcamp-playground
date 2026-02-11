@@ -1,0 +1,164 @@
+version: 2
+
+models:
+  - name: stg_green_taxi_trip
+    description: "Staging model for green taxi trips data."
+    columns:
+      - name: vendor_id
+        data_type: integer
+        description: "Unique identifier for each vendor."
+        data_tests:
+          - not_null
+
+      - name: rate_code_id
+        data_type: integer
+        description: ""
+
+      - name: pu_location_id
+        data_type: integer
+        description: ""
+
+      - name: do_location_id
+        data_type: integer
+        description: ""
+
+      - name: pickup_datetime
+        data_type: timestamp
+        description: ""
+        data_tests:
+          - not_null
+
+      - name: dropoff_datetime
+        data_type: timestamp
+        description: ""
+        data_tests:
+          - not_null
+
+      - name: store_and_fwd_flag
+        data_type: varchar
+        description: ""
+
+      - name: passenger_count
+        data_type: integer
+        description: ""
+
+      - name: trip_distance
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: trip_type
+        data_type: integer
+        description: ""
+
+      - name: fare_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: extra
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: mta_tax
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tip_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tolls_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: ehail_fee
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: improvement_surcharge
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: total_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: payment_type
+        data_type: integer
+        description: ""
+
+  - name: stg_yellow_taxi_trip
+    description: "Staging model for yellow taxi trips data."
+    columns:
+      - name: vendor_id
+        data_type: integer
+        description: "Unique identifier for each vendor."
+        data_tests:
+          - not_null
+
+      - name: rate_code_id
+        data_type: integer
+        description: ""
+
+      - name: pu_location_id
+        data_type: integer
+        description: ""
+
+      - name: do_location_id
+        data_type: integer
+        description: ""
+
+      - name: pickup_datetime
+        data_type: timestamp
+        description: "The pickup datetime of the trip."
+        data_tests:
+          - not_null
+
+      - name: dropoff_datetime
+        data_type: timestamp
+        description: "The dropoff datetime of the trip."
+        data_tests:
+          - not_null
+
+      - name: store_and_fwd_flag
+        data_type: varchar
+        description: ""
+
+      - name: passenger_count
+        data_type: integer
+        description: ""
+
+      - name: trip_distance
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: fare_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: extra
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: mta_tax
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tip_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tolls_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: improvement_surcharge
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: total_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: payment_type
+        data_type: integer
+        description: ""

@@ -1,0 +1,191 @@
+version: 2
+
+models:
+  - name: int_trips_unioned
+    description: "Unioned trips data for both yellow and green taxis."
+    columns:
+      - name: vendor_id
+        data_type: integer
+        description: ""
+
+      - name: rate_code_id
+        data_type: integer
+        description: ""
+
+      - name: pu_location_id
+        data_type: integer
+        description: ""
+
+      - name: do_location_id
+        data_type: integer
+        description: ""
+
+      - name: pickup_datetime
+        data_type: timestamp
+        description: ""
+
+      - name: dropoff_datetime
+        data_type: timestamp
+        description: ""
+
+      - name: store_and_fwd_flag
+        data_type: varchar
+        description: ""
+
+      - name: passenger_count
+        data_type: integer
+        description: ""
+
+      - name: trip_distance
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: trip_type
+        data_type: integer
+        description: ""
+
+      - name: fare_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: extra
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: mta_tax
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tip_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tolls_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: ehail_fee
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: improvement_surcharge
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: total_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: payment_type
+        data_type: integer
+        description: ""
+
+      - name: taxi_type
+        data_type: varchar
+        description: ""
+
+  - name: int_trips
+    description: "Cleaned and standardized trips data for both yellow and green taxis."
+    columns:
+      - name: trip_id
+        data_type: varchar
+        description: "Unique identifier for each trip."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: vendor_id
+        data_type: integer
+        description: "Unique identifier for each vendor."
+        data_tests:
+          - not_null
+
+      - name: rate_code_id
+        data_type: integer
+        description: "Rate code identifier."
+
+      - name: pu_location_id
+        data_type: integer
+        description: "Pickup location identifier."
+
+      - name: do_location_id
+        data_type: integer
+        description: "Dropoff location identifier."
+
+      - name: pickup_datetime
+        data_type: timestamp
+        description: ""
+        data_tests:
+          - not_null
+
+      - name: dropoff_datetime
+        data_type: timestamp
+        description: ""
+        data_tests:
+          - not_null
+
+      - name: store_and_fwd_flag
+        data_type: varchar
+        description: ""
+
+      - name: passenger_count
+        data_type: integer
+        description: ""
+
+      - name: trip_distance
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: trip_type
+        data_type: integer
+        description: ""
+
+      - name: fare_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: extra
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: mta_tax
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tip_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: tolls_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: ehail_fee
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: improvement_surcharge
+        data_type: decimal(18,3)
+        description: ""
+        data_tests:
+          - not_null
+
+      - name: total_amount
+        data_type: decimal(18,3)
+        description: ""
+
+      - name: taxi_type
+        data_type: varchar
+        description: ""
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['yellow', 'green']
+
+      - name: payment_type
+        data_type: integer
+        description: ""
+
+      - name: payment_type_description
+        data_type: varchar
+        description: ""

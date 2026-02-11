@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: agg_monthly_zone_revenue
+    description: ""
+    data_tests:
+     - dbt_utils.unique_combination_of_columns:
+        combination_of_columns:
+          - pu_zone
+          - revenue_month
+          - taxi_type
+    columns:
+      - name: pu_zone
+        data_type: varchar
+        description: "Pickup zone for the trips."
+        data_tests:
+          - not_null
+
+      - name: revenue_month
+        data_type: date
+        description: "Month of the revenue aggregation."
+        data_tests:
+          - not_null
+
+      - name: taxi_type
+        data_type: varchar
+        description: "Type of taxi (e.g., yellow, green)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['yellow', 'green']
+
+      - name : total_revenue_monthly
+        data_type: decimal(18,3)
+        description: "Total revenue for the month in the specified zone and taxi type."
+        data_tests:
+          - not_null
