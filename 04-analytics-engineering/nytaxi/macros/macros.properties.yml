@@ -4,3 +4,11 @@ macros:
     arguments:
       - name: vendor_id
         description: "The ID of the vendor"
+
+  - name: get_duration_minutes
+    description: "Calculates the duration in minutes between two timestamps"
+    arguments:
+      - name: start_time
+        description: "The start timestamp"
+      - name: end_time
+        description: "The end timestamp"

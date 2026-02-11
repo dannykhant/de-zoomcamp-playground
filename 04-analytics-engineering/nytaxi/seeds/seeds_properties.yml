@@ -4,6 +4,10 @@ seeds:
     columns:
       - name: payment_type
         description: "Unique identifier for each payment type."
+        data_tests:
+          - unique
+          - not_null
+          
       - name: description
         description: "Description of the payment type."
 
