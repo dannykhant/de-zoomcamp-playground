@@ -1,0 +1,20 @@
+seeds:
+  - name: payment_type_lookup
+    description: "Lookup table for payment types used in NY Taxi rides."
+    columns:
+      - name: payment_type
+        description: "Unique identifier for each payment type."
+      - name: description
+        description: "Description of the payment type."
+
+  - name: taxi_zone_lookup
+    description: "Lookup table for NYC taxi zones."
+    columns:
+      - name: locationid
+        description: "Unique identifier for each taxi zone."
+      - name: borough
+        description: "Borough where the taxi zone is located."
+      - name: zone
+        description: "Name of the taxi zone."
+      - name: service_zone
+        description: "Service zone classification for the taxi zone."
