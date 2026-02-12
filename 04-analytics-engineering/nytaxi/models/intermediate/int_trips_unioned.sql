@@ -20,7 +20,7 @@ with green_trips as (
         total_amount,
         payment_type,
         'green' as taxi_type
-    from {{ ref('stg_green_taxi_trip') }}
+    from {{ ref('stg_green_taxi_trips') }}
 ),
 yellow_trips as (
     select 
@@ -44,9 +44,11 @@ yellow_trips as (
         total_amount,
         payment_type,
         'yellow' as taxi_type
-    from {{ ref('stg_yellow_taxi_trip') }}
+    from {{ ref('stg_yellow_taxi_trips') }}
 )
-
-select * from green_trips
-union all
-select * from yellow_trips
+, unioned as (
+    select * from green_trips
+    union all
+    select * from yellow_trips
+)
+select * from unioned

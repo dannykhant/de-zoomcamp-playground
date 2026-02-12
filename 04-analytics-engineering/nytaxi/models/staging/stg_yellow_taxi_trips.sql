@@ -30,10 +30,10 @@ renamed as (
         cast(total_amount as numeric) as total_amount,
         cast(payment_type as integer) as payment_type
     from source
-    where VendorID is not null
+    where VendorID is not null and total_amount >= 0
 )
 
-select * from renamed
+select distinct* from renamed
 
 {% if target.name == 'dev' %}
     limit 500

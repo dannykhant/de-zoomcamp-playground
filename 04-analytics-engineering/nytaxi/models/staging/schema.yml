@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: stg_green_taxi_trip
+  - name: stg_green_taxi_trips
     description: "Staging model for green taxi trips data."
     columns:
       - name: vendor_id
@@ -86,7 +86,7 @@ models:
         data_type: integer
         description: ""
 
-  - name: stg_yellow_taxi_trip
+  - name: stg_yellow_taxi_trips
     description: "Staging model for yellow taxi trips data."
     columns:
       - name: vendor_id

@@ -8,7 +8,12 @@ def download_and_convert_files(taxi_type):
     data_dir = Path("data") / taxi_type
     data_dir.mkdir(exist_ok=True, parents=True)
 
-    for year in [2019, 2020]:
+    if taxi_type == "fhv":
+        years = [2019]
+    else:
+        years = [2019, 2020]
+
+    for year in years:
         for month in range(1, 13):
             parquet_filename = f"{taxi_type}_tripdata_{year}-{month:02d}.parquet"
             parquet_filepath = data_dir / parquet_filename
@@ -55,13 +60,13 @@ if __name__ == "__main__":
     # Update .gitignore to exclude data directory
     update_gitignore()
 
-    for taxi_type in ["yellow", "green"]:
+    for taxi_type in ["yellow", "green", "fhv"]:
         download_and_convert_files(taxi_type)
 
     con = duckdb.connect("taxi_rides_ny.duckdb")
     con.execute("CREATE SCHEMA IF NOT EXISTS raw")
 
-    for taxi_type in ["yellow", "green"]:
+    for taxi_type in ["yellow", "green", "fhv"]:
         con.execute(f"""
             CREATE OR REPLACE TABLE raw.{taxi_type}_tripdata AS
             SELECT * FROM read_parquet('data/{taxi_type}/*.parquet', union_by_name=true)

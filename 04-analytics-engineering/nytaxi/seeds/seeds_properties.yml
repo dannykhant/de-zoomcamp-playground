@@ -11,7 +11,7 @@ seeds:
       - name: description
         description: "Description of the payment type."
 
-  - name: taxi_zone_lookup
+  - name: zone_lookup
     description: "Lookup table for NYC taxi zones."
     columns:
       - name: locationid

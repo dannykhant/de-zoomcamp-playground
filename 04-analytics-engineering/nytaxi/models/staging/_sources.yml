@@ -11,3 +11,6 @@ sources:
       - name: yellow_tripdata
         description: "Raw data for yellow taxi trips"
         loaded_at_field: lpep_pickup_datetime
+      - name: fhv_tripdata
+        description: "Raw data for for-hire vehicle trips"
+        loaded_at_field: lpep_pickup_datetime
