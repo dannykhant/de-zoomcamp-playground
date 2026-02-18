@@ -218,3 +218,9 @@ __marimo__/
 # Project specific ignores
 .env_encoded
 .vscode
+.kilocode
+.bruin.yml
+logs/runs
+logs/*.log
+*.py[cod]
+*.db
