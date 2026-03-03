@@ -20,3 +20,8 @@ dependencies = [
 dev = [
     "pgcli>=4.4.0",
 ]
+
+[tool.uv.workspace]
+members = [
+    "workshops/dlt-pipeline",
+]
