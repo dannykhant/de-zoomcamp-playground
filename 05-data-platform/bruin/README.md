@@ -1,0 +1,172 @@
+# Module: 5
+
+### Bruin Projects
+
+- **Project = git-initialized root directory**
+    - Bruin CLI detects this as the root to resolve the directory tree.
+- **`bruin.yaml` (at project root)**
+    - Defines **environments, connections, and secrets**.
+    - Stored locally.
+    - Automatically added to `.gitignore` (never committed).
+- **Environments**
+    - Examples: `dev`, `prod`, `sandbox`.
+    - One can be set as the **default**.
+    - Control where pipelines run and which credentials they use.
+- **Connections**
+    - Defined per environment.
+    - Can be built-in (e.g., databases, warehouses) or custom.
+    - Hold credentials, API keys, and config.
+- **Secrets & variables**
+    - Declared in `bruin.yaml`.
+    - Exposed to pipelines as variables.
+    - Environment-scoped.
+
+### Bruin Pipelines
+
+- **Project can contain multiple pipelines**
+    - Pipelines are grouped based on schedule and configuration needs.
+    - Each pipeline has **one schedule**.
+- **Pipeline = folder + `pipeline.yaml`**
+    - Each pipeline lives in its own folder.
+    - `pipeline.yaml` defines:
+        - Pipeline name
+        - Schedule
+        - Connections used
+        - Variables
+        - Other configuration parameters
+- **Schedule**
+    - Defined in `pipeline.yaml`.
+    - Can be:
+        - Cron expression
+        - Presets like `daily`, `monthly`, `hourly`
+    - All tasks in the pipeline follow this single schedule.
+- **Default connection (critical concept)**
+    - Project-level connections are defined globally.
+    - Pipeline must explicitly declare which connections it uses.
+    - Only declared connections are initialized at runtime.
+    - Prevents unnecessary secret exposure.
+    - Enables security isolation across teams.
+- **Pipeline-level variables**
+    - Custom variables can be defined inside `pipeline.yaml`.
+    - Scoped to that pipeline.
+
+### Bruin Assets
+
+- **Asset = single file**
+    - Performs one task.
+    - Always tied to a specific table, view, or data action.
+    - Executed when a pipeline run is triggered.
+- **Asset structure**
+    - Top section: **definition (configuration)**
+    - Bottom section: **content (code/query)**
+    - Definition includes:
+        - Name (optional; can be inferred from file path)
+        - Type
+        - Connection
+        - Metadata (description, columns, etc.)
+        - Dependencies
+        - Materialization settings
+- **Asset types**
+    - SQL
+    - Python
+    - R
+    - YAML (e.g., seed assets)
+- **Naming & inference**
+    - If name not explicitly defined:
+        - Inferred from folder structure.
+        - Format: `subfolder.asset_name`
+    - Typically maps to:
+        - Database schema/dataset = folder
+        - Table name = file name
+- **Materialization**
+    - Defines how results are written (e.g., table).
+    - Code/query result becomes a table in destination DB.
+    - Strategy controls overwrite/insert behavior (not covered here).
+- **Dependencies & lineage**
+    - Assets declare upstream dependencies.
+    - Execution order is dependency-driven.
+    - Running an asset with downstream triggers dependent assets.
+    - Lineage viewable via VS Code extension.
+- **Assets folder**
+    - Each pipeline has an `assets/` directory.
+    - Each file in it creates or updates one table/view.
+- **Seed (YAML) asset**
+    - No code/query.
+    - Loads local file (e.g., CSV) into destination DB table.
+
+### Bruin Variables
+
+- **Variables are initialized at every pipeline run**
+    - Available during execution.
+    - Can be injected into asset code.
+- **Two types of variables**
+    - **Built-in variables**
+    - **Custom variables**
+- **Built-in variables**
+    - Automatically provided on every run.
+    - Key examples:
+        - `start_date`
+        - `end_date`
+    - Values depend on pipeline schedule (e.g., monthly → start/end of month).
+    - Can use exclusive end date behavior.
+    - Purpose: interval-based logic (e.g., incremental loads).
+- **Injection mechanism**
+    - **SQL assets**: injected via Jinja templating.
+    - **Python assets**: accessed through environment variables (`os.environ`).
+    - Variables are compiled/rendered before execution.
+- **Custom variables**
+    - Defined in `pipeline.yaml`.
+    - Include:
+        - Name
+        - Type (e.g., string, array)
+        - Default value
+    - Scoped to the pipeline.
+- **Runtime overrides**
+    - Custom variables can be overridden at execution time.
+    - Default value used unless explicitly overridden.
+    - Enables ad hoc or parameterized runs without changing code.
+
+### Bruin Commands
+
+- **Run = single execution of a pipeline**
+    - Can execute:
+        - Entire pipeline
+        - Single asset
+        - Asset + upstream
+        - Asset + downstream
+    - Any execution instance is a “run”.
+- **Basic CLI command**
+    - `bruin run <pipeline_path>`
+    - Uses default:
+        - Environment
+        - Schedule interval
+        - Variables
+        - Materialization behavior
+- **Run configuration flags**
+    - `-start-date` / `-end-date` → define interval
+    - `-full-refresh` → drops & recreates tables (overrides incremental/insert behavior)
+    - `-var` → override custom variables at runtime
+    - `-env` → select environment (e.g., dev, prod)
+    - Provide pipeline path (full path safest)
+- **Execution scope control**
+    - Can run:
+        - Entire pipeline
+        - Specific assets
+        - Asset + lineage (upstream/downstream)
+- **Materialization interaction**
+    - Without `-full-refresh`: respects asset materialization (e.g., insert-only).
+    - With `-full-refresh`: forces table rebuild.
+- **Validation command**
+    - `bruin validate`
+    - Checks:
+        - Lineage correctness
+        - No circular dependencies
+        - Asset definitions
+        - Connection references
+        - Environment configuration
+    - Ensures pipeline is structurally valid before running.
+- **Overall execution model**
+    - Project defines environments & connections.
+    - Pipeline defines schedule, variables, and selected connections.
+    - Assets define execution logic + dependencies.
+    - CLI commands trigger execution and validation.
