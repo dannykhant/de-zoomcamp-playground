@@ -27,4 +27,5 @@ dev = [
 members = [
     "workshops/dlt-pipeline",
     "05-data-platform",
+    "07-streaming/src",
 ]
