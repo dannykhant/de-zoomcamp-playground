@@ -27,7 +27,7 @@ t0 = time()
 for _, row in df.iterrows():
     ride = ride_from_row(row)
     producer.send(topic_name, ride)
-    sleep(0.01)  # Simulate some delay between messages
+    # sleep(0.01)  # Simulate some delay between messages
 
 producer.flush()
 
